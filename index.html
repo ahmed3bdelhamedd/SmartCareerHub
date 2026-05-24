@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Career Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8CC7A;
+    --gold-dark: #8B6914;
+    --navy: #0A1628;
+    --navy-mid: #112240;
+    --navy-light: #1E3A5F;
+    --white: #FFFFFF;
+    --gray-soft: #F4F6FA;
+    --gray-text: #6B7A99;
+    --text-dark: #0D1B2A;
+    --radius: 16px;
+    --radius-sm: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+    background: var(--white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+    direction: rtl;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,22,40,0.95);
+    backdrop-filter: blur(12px);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  .nav-logo {
+    font-size: 1.3rem; font-weight: 900;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.8); text-decoration: none;
+    font-size: 0.9rem; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--gold);
+    color: var(--navy) !important;
+    padding: 8px 20px; border-radius: 50px;
+    font-weight: 700 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--navy) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 120px 5% 80px;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 70% at 80% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 50% at 10% 80%, rgba(30,58,95,0.5) 0%, transparent 60%);
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+    max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; width: 100%;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold-light); font-size: 0.8rem; font-weight: 600;
+    padding: 6px 16px; border-radius: 50px; margin-bottom: 1.5rem;
+  }
+  .hero-badge::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--gold); flex-shrink: 0;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+
+  .hero-title {
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 900; color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+  }
+  .hero-title .accent { color: var(--gold); }
+  .hero-sub {
+    font-size: 1.1rem; color: rgba(255,255,255,0.65);
+    line-height: 1.8; margin-bottom: 2rem; font-weight: 300;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--gold); color: var(--navy);
+    padding: 14px 32px; border-radius: 50px;
+    font-family: inherit; font-size: 1rem; font-weight: 700;
+    border: none; cursor: pointer; text-decoration: none;
+    display: inline-block; transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    padding: 14px 32px; border-radius: 50px;
+    font-family: inherit; font-size: 1rem; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.3);
+    cursor: pointer; text-decoration: none;
+    display: inline-block; transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-stats {
+    display: flex; gap: 2rem; margin-top: 2.5rem;
+    padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .stat-item { }
+  .stat-num { font-size: 1.8rem; font-weight: 900; color: var(--gold); line-height: 1; }
+  .stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-top: 4px; }
+
+  .hero-visual {
+    position: relative; display: flex; align-items: center; justify-content: center;
+  }
+  .hero-card-main {
+    background: var(--navy-mid);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 20px; padding: 2rem;
+    width: 100%; max-width: 380px;
+    position: relative;
+  }
+  .hero-card-icon {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: rgba(201,168,76,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; margin-bottom: 1rem;
+  }
+  .hero-card-title { color: var(--white); font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .hero-card-text { color: rgba(255,255,255,0.5); font-size: 0.85rem; line-height: 1.7; }
+
+  .floating-tag {
+    position: absolute;
+    background: var(--navy-mid);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 50px; padding: 8px 16px;
+    color: var(--white); font-size: 0.78rem; font-weight: 600;
+    white-space: nowrap;
+  }
+  .tag-1 { top: -20px; right: -30px; color: var(--gold-light); border-color: rgba(201,168,76,0.5); }
+  .tag-2 { bottom: -15px; left: -20px; }
+  .tag-3 { top: 50%; left: -40px; transform: translateY(-50%); }
+
+  /* ── ABOUT ── */
+  .about {
+    padding: 100px 5%;
+    background: var(--gray-soft);
+  }
+  .section-label {
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gold-dark);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 900; color: var(--navy);
+    line-height: 1.25; margin-bottom: 1.2rem;
+  }
+  .section-body {
+    font-size: 1.05rem; color: var(--gray-text);
+    line-height: 1.9; max-width: 620px;
+    font-weight: 400;
+  }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; max-width: 1200px; margin: 0 auto; }
+  .strengths-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+  .strength-card {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: var(--radius); padding: 1.5rem;
+  }
+  .strength-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: rgba(201,168,76,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; margin-bottom: 0.8rem;
+  }
+  .strength-title { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+  .strength-text { font-size: 0.82rem; color: var(--gray-text); line-height: 1.6; }
+
+  /* ── HOW IT WORKS ── */
+  .how {
+    padding: 100px 5%;
+    background: var(--navy);
+  }
+  .how .section-title { color: var(--white); }
+  .how .section-label { color: var(--gold); }
+  .steps-row { display: flex; gap: 0; max-width: 1100px; margin: 3rem auto 0; position: relative; }
+  .steps-row::before {
+    content: '';
+    position: absolute; top: 32px; right: 10%; left: 10%;
+    height: 1px; background: rgba(201,168,76,0.2);
+  }
+  .step {
+    flex: 1; text-align: center; padding: 0 1rem; position: relative;
+  }
+  .step-num {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--navy-mid); border: 2px solid rgba(201,168,76,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; font-weight: 900; color: var(--gold);
+    margin: 0 auto 1.2rem;
+    position: relative; z-index: 1;
+  }
+  .step.active .step-num {
+    background: var(--gold); color: var(--navy);
+    border-color: var(--gold);
+  }
+  .step-title { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+  .step-text { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+  /* ── TRACKS ── */
+  .tracks {
+    padding: 100px 5%;
+    background: var(--white);
+  }
+  .tracks-intro { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+  .tracks-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 1200px; margin: 0 auto; }
+  .track-card {
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: var(--radius); padding: 1.6rem;
+    transition: all 0.25s; cursor: pointer;
+    position: relative; overflow: hidden;
+    text-decoration: none; display: block; color: inherit;
+  }
+  .track-card::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: var(--gold);
+    transform: scaleX(0); transform-origin: right;
+    transition: transform 0.3s;
+  }
+  .track-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+  .track-card:hover::before { transform: scaleX(1); transform-origin: left; }
+  .track-cat {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--gold-dark);
+    margin-bottom: 0.8rem;
+  }
+  .track-name { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+  .track-desc { font-size: 0.83rem; color: var(--gray-text); line-height: 1.6; }
+  .track-emoji { font-size: 1.8rem; margin-bottom: 0.8rem; display: block; }
+
+  /* ── COMMUNITY ── */
+  .community {
+    padding: 100px 5%;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .community::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 70%);
+  }
+  .community .section-title { color: var(--white); }
+  .community .section-body { max-width: 580px; margin: 0 auto 3rem; color: rgba(255,255,255,0.6); }
+  .community-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1000px; margin: 0 auto 3rem; position: relative; z-index: 1; }
+  .comm-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: var(--radius); padding: 2rem 1.5rem;
+  }
+  .comm-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+  .comm-title { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+  .comm-text { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+  .community-cta { position: relative; z-index: 1; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    padding: 60px 5% 30px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+  .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 3rem; max-width: 1200px; margin: 0 auto; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .footer-brand .nav-logo { font-size: 1.4rem; display: block; margin-bottom: 1rem; }
+  .footer-brand p { font-size: 0.85rem; color: rgba(255,255,255,0.4); line-height: 1.8; }
+  .footer-col h4 { color: var(--white); font-size: 0.9rem; font-weight: 700; margin-bottom: 1rem; }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 0.6rem; }
+  .footer-col a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding-top: 2rem; }
+  .footer-bottom p { color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+  .free-badge {
+    background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold-light); font-size: 0.78rem; font-weight: 700;
+    padding: 4px 14px; border-radius: 50px;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .two-col { grid-template-columns: 1fr; }
+    .tracks-grid { grid-template-columns: 1fr 1fr; }
+    .steps-row { flex-direction: column; gap: 2rem; }
+    .steps-row::before { display: none; }
+    .community-cards { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    .nav-links { display: none; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+  @media (max-width: 600px) {
+    .tracks-grid { grid-template-columns: 1fr; }
+    .strengths-grid { grid-template-columns: 1fr; }
+    .tracks-intro { flex-direction: column; gap: 1rem; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Smart <span>Career</span> Hub</div>
+  <ul class="nav-links">
+    <li><a href="#about">من نحن</a></li>
+    <li><a href="#tracks">المسارات</a></li>
+    <li><a href="#how">كيف يعمل</a></li>
+    <li><a href="#community">المجتمع</a></li>
+    <li><a href="#community" class="nav-cta">انضم مجاناً</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-badge">منصة مجانية 100% للعالم العربي</div>
+      <h1 class="hero-title">
+        ابنِ مسيرتك المهنية<br>
+        بذكاء مع <span class="accent">Smart Career Hub</span>
+      </h1>
+      <p class="hero-sub">
+        نردم الفجوة بين التعليم الأكاديمي وسوق العمل الحقيقي — من خلال 13+ مجتمع متخصص، تحسين بروفايل LinkedIn، وفرص توظيف مباشرة.
+      </p>
+      <div class="hero-btns">
+        <a href="https://forms.gle/NGt4dQDHYesGaBwi7" target="_blank" class="btn-primary">ابدأ رحلتك الآن</a>
+        <a href="#tracks" class="btn-outline">استكشف المسارات</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">13+</div>
+          <div class="stat-label">مسار متخصص</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">مجاني تماماً</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">360°</div>
+          <div class="stat-label">نظام متكامل</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card-main">
+        <div class="floating-tag tag-1">🎯 AI & Data Science</div>
+        <div class="floating-tag tag-2">💼 HR & Recruitment</div>
+        <div class="floating-tag tag-3">📊 Accounting</div>
+        <div class="hero-card-icon">🚀</div>
+        <div class="hero-card-title">من الصفر لأول وظيفة</div>
+        <div class="hero-card-text">
+          منظومة متكاملة تبدأ باختيار مسارك وتنتهي بالحصول على وظيفتك — كل شيء في مكان واحد.
+        </div>
+        <div style="margin-top: 1.2rem; display: flex; flex-direction: column; gap: 0.6rem;">
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 0.82rem; color: rgba(255,255,255,0.6);">
+            <span style="color: #4ade80;">✓</span> تدريب عملي متخصص
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 0.82rem; color: rgba(255,255,255,0.6);">
+            <span style="color: #4ade80;">✓</span> تحسين بروفايل LinkedIn
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 0.82rem; color: rgba(255,255,255,0.6);">
+            <span style="color: #4ade80;">✓</span> فرص توظيف مباشرة
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 0.82rem; color: rgba(255,255,255,0.6);">
+            <span style="color: #4ade80;">✓</span> إرشاد فوري من خبراء
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="two-col">
+    <div>
+      <div class="section-label">من نحن</div>
+      <h2 class="section-title">منصة رائدة لتمكين الشباب في العالم العربي</h2>
+      <p class="section-body">
+        Smart Career Hub منصة متعددة التخصصات تُمكّن الشباب والمهنيين في العالم العربي، من خلال ردم الهوة بين التعليم الأكاديمي والاحتياجات المتغيرة لسوق العمل العالمي.
+        <br><br>
+        نوفر نظاماً متكاملاً يشمل التدريب عالي الجودة، وتحسين بروفايل LinkedIn بإشراف خبراء، وفرص عمل منتقاة في أكثر من 13 مسار مهني متخصص — كل ذلك مجاناً للجميع.
+      </p>
+    </div>
+    <div class="strengths-grid">
+      <div class="strength-card">
+        <div class="strength-icon">🎯</div>
+        <div class="strength-title">خبرة متخصصة</div>
+        <div class="strength-text">13+ مجتمع متخصص يضمن موارد ومرشدين خبراء لكل مسار مهني.</div>
+      </div>
+      <div class="strength-card">
+        <div class="strength-icon">🔄</div>
+        <div class="strength-title">نظام 360°</div>
+        <div class="strength-text">رحلة مهنية كاملة تحت سقف واحد: تدريب، LinkedIn، وتوظيف مباشر.</div>
+      </div>
+      <div class="strength-card">
+        <div class="strength-icon">🌍</div>
+        <div class="strength-title">وصول عالمي</div>
+        <div class="strength-text">جميع خدماتنا مجانية 100% لتمكين كل من يسعى لبناء مسيرته.</div>
+      </div>
+      <div class="strength-card">
+        <div class="strength-icon">💬</div>
+        <div class="strength-title">مجتمع تفاعلي</div>
+        <div class="strength-text">شبكات واتساب تفاعلية مع إرشاد فوري من خبراء AI وغيرهم.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div style="max-width: 1100px; margin: 0 auto; text-align: center;">
+    <div class="section-label">كيف يعمل</div>
+    <h2 class="section-title">تحويل إمكاناتك إلى تميز مهني</h2>
+  </div>
+  <div class="steps-row">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">اكتشف وانضم</div>
+      <div class="step-text">اختر مسارك المهني المتخصص من 13+ مجتمع بناءً على أهدافك واهتماماتك.</div>
+    </div>
+    <div class="step active">
+      <div class="step-num">02</div>
+      <div class="step-title">تعلم وطوّر نفسك</div>
+      <div class="step-text">استفد من جلسات تدريبية حصرية وموارد منتقاة ومشاركة معرفية فورية.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">احترف وابرز نفسك</div>
+      <div class="step-text">احصل على إرشاد خبير لتحسين بروفايل LinkedIn وبناء علامتك الشخصية.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-title">تواصل واحصل على وظيفة</div>
+      <div class="step-text">وصول مباشر لفرص عمل وشبكات توظيف مخصصة لتخصصك الدقيق.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRACKS -->
+<section class="tracks" id="tracks">
+  <div class="tracks-intro">
+    <div>
+      <div class="section-label">المسارات المهنية</div>
+      <h2 class="section-title">13+ مسار متخصص — اختر طريقك</h2>
+    </div>
+    <a href="https://chat.whatsapp.com/DyDv4R35Acu43v4fiIkVPn" target="_blank" class="btn-primary" style="white-space: nowrap;">انضم لمجتمعك</a>
+  </div>
+  <div class="tracks-grid">
+    <a href="https://chat.whatsapp.com/CfoZfZQDReZ20CU6tAohIn" target="_blank" class="track-card">
+      <span class="track-emoji">🤖</span>
+      <div class="track-cat">التكنولوجيا والمستقبل</div>
+      <div class="track-name">الذكاء الاصطناعي والابتكار</div>
+      <div class="track-desc">أدوات AI الأحدث وتطبيقاتها العملية في سوق العمل.</div>
+    </a>
+    <a href="https://chat.whatsapp.com/ElVenowJxcu9OhssKVyOkw" target="_blank" class="track-card">
+      <span class="track-emoji">📊</span>
+      <div class="track-cat">التكنولوجيا والمستقبل</div>
+      <div class="track-name">تحليل البيانات وعلم البيانات</div>
+      <div class="track-desc">إتقان لغة البيانات والتحليلات في العصر الرقمي.</div>
+    </a>
+    <a href="https://chat.whatsapp.com/IMXwb9P6ej0CesfDJZgJGo" target="_blank" class="track-card">
+      <span class="track-emoji">💻</span>
+      <div class="track-cat">التكنولوجيا والمستقبل</div>
+      <div class="track-name">مهارات الحاسب الآلي</div>
+      <div class="track-desc">الأساس الرقمي اللازم لأي بيئة عمل حديثة.</div>
+    </a>
+    <a href="https://chat.whatsapp.com/CAjMv5ZXErbJQlxdLQiU32" target="_blank" class="track-card">
+      <span class="track-emoji">🏦</span>
+      <div class="track-cat">الأعمال والتميز المالي</div>
+      <div class="track-name">المحاسبة والبنوك</div>
+      <div class="track-desc">مركز متخصص للمهنيين الماليين والمصرفيين الطامحين.</div>
+    </a>
+    <a href="https://chat.whatsapp.com/InuOo8AKSdsKL3d38wK4I3" target="_blank" class="track-card">
+      <span class="track-emoji">📣</span>
+      <div class="track-cat">الأعمال والتميز المالي</div>
+      <div class="track-name">التسويق والنمو</div>
+      <div class="track-desc">استراتيجيات وأدوات التسويق الحديث في العالم الرقمي.</div>
+    </a>
+    <a href="https://chat.whatsapp.com/D84zahGh3U0AgDZRwVw84L" target="_blank" class="track-card">
+      <span class="track-emoji">👥</span>
+      <div class="track-cat">الأعمال والتميز المالي</div>
+      <div class="track-name">الموارد البشرية HR</div>
+      <div class="track-desc">تواصل متخصصي HR وأفضل ممارسات الصناعة.</div>
+    </a>
+    <a href="https://chat.whatsapp.com/GMXQlS6DaCx716JtocI5cl" target="_blank" class="track-card">
+      <span class="track-emoji">🔗</span>
+      <div class="track-cat">دعم المسيرة المهنية</div>
+      <div class="track-name">دعم LinkedIn</div>
+      <div class="track-desc">إرشاد متخصص لبناء علامة شخصية قوية وشبكة مهنية واسعة.</div>
+    </a>
+    <a href="https://chat.whatsapp.com/ILaSndB9jg5FdOiKACTlHK" target="_blank" class="track-card">
+      <span class="track-emoji">🗣️</span>
+      <div class="track-cat">دعم المسيرة المهنية</div>
+      <div class="track-name">المهارات الشخصية والتدريب</div>
+      <div class="track-desc">تطوير مهارات التواصل والتفكير النقدي والآداب المهنية.</div>
+    </a>
+    <a href="https://chat.whatsapp.com/G2SyLK8PhF2AJC7czKGuaf" target="_blank" class="track-card">
+      <span class="track-emoji">⚖️</span>
+      <div class="track-cat">دعم المسيرة المهنية</div>
+      <div class="track-name">القانون وقانون الشركات</div>
+      <div class="track-desc">موارد متخصصة للمهنيين والطلاب في المجال القانوني.</div>
+    </a>
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section class="community" id="community">
+  <div class="section-label" style="color: var(--gold);">انضم الآن</div>
+  <h2 class="section-title">مجتمع حقيقي — دعم فوري — فرص حقيقية</h2>
+  <p class="section-body">
+    أكثر من مجرد منصة — نحن بيئة تعاونية يُشارَك فيها المعرفة وتُبنى فيها المسيرات المهنية، متاحة للجميع في كل مكان، مجاناً.
+  </p>
+  <div class="community-cards">
+    <div class="comm-card">
+      <div class="comm-icon">💬</div>
+      <div class="comm-title">مجتمعات واتساب التفاعلية</div>
+      <div class="comm-text">شبكات حية مع إرشاد فوري من خبراء في مجالات AI والمحاسبة والـ HR وأكثر.</div>
+    </div>
+    <div class="comm-card">
+      <div class="comm-icon">🌐</div>
+      <div class="comm-title">موارد حصرية</div>
+      <div class="comm-text">محتوى تدريبي منتقى، فرص عمل مباشرة، وشبكات توظيف تناسب تخصصك تماماً.</div>
+    </div>
+    <div class="comm-card">
+      <div class="comm-icon">🆓</div>
+      <div class="comm-title">مجاني للأبد</div>
+      <div class="comm-text">جميع الخدمات والدعم المهني متاحة بدون أي رسوم — لأن الفرص يجب أن تكون للجميع.</div>
+    </div>
+  </div>
+  <div class="community-cta">
+    <a href="https://chat.whatsapp.com/DyDv4R35Acu43v4fiIkVPn" target="_blank" class="btn-primary" style="font-size: 1.05rem; padding: 16px 40px;">
+      ابدأ رحلتك المهنية مجاناً ←
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="nav-logo">Smart <span>Career</span> Hub</span>
+      <p>منصة رائدة لتمكين الشباب والمهنيين في العالم العربي، نردم الفجوة بين التعليم وسوق العمل.</p>
+      <div style="margin-top: 1rem;">
+        <span class="free-badge">مجاني 100% 🎁</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>المسارات</h4>
+      <ul>
+        <li><a href="#tracks">الذكاء الاصطناعي</a></li>
+        <li><a href="#tracks">تحليل البيانات</a></li>
+        <li><a href="#tracks">المحاسبة والبنوك</a></li>
+        <li><a href="#tracks">التسويق والنمو</a></li>
+        <li><a href="#tracks">الموارد البشرية</a></li>
+        <li><a href="#tracks">دعم LinkedIn</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>روابط سريعة</h4>
+      <ul>
+        <li><a href="#about">من نحن</a></li>
+        <li><a href="#how">كيف يعمل</a></li>
+        <li><a href="#community">المجتمع</a></li>
+        <li><a href="#community">انضم الآن</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Smart Career Hub. جميع الحقوق محفوظة.</p>
+    <p style="color: rgba(255,255,255,0.3); font-size: 0.8rem;">تمكين الشباب العربي — مجاناً ودائماً</p>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 50
+      ? 'rgba(10,22,40,0.98)'
+      : 'rgba(10,22,40,0.95)';
+  });
+</script>
+</body>
+</html>
